@@ -1,0 +1,14 @@
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dotinMikro
+    username: postgres
+    password: salam
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+server:
+  port: 9090
