@@ -11,6 +11,8 @@ public class Discount {
     private Long id;
     private BigDecimal percentage;
     private String code;
+    private String expireDate;
+
 
 
     @Id
@@ -41,4 +43,8 @@ public class Discount {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public String getExpireDate() {return expireDate;}
+
+    public void setExpireDate(String expireDate) {this.expireDate = expireDate;}
 }
