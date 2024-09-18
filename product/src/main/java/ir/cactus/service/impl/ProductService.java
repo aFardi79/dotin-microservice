@@ -1,7 +1,7 @@
 package ir.cactus.service.impl;
 
 
-import ir.cactus.model.Discount;
+import ir.cactus.model.DiscountDTO;
 import ir.cactus.model.Product;
 import ir.cactus.repository.ProductRepository;
 import ir.cactus.service.dto.ProductDTO;
@@ -31,7 +31,7 @@ public class ProductService {
 //                .uri("http://localhost:9090/api/v1/discount/findDiscountByCode/{code}")
 //                        .retrieve()
 //                                .toEntity(Discount.class);
-        Discount discount=restTemplate.getForObject("http://localhost:9090/api/v1/discount/findDiscountByCode/{code}", Discount.class,product.getCouponCode());
+        DiscountDTO discount=restTemplate.getForObject("http://localhost:9090/api/v1/discount/findDiscountByCode/{code}", DiscountDTO.class,product.getCouponCode());
         product.setPrice(product.getPrice().divide(discount.getPercentage()));
         Product productEntity=generateProduct(product);
         productRepository.save(productEntity);
