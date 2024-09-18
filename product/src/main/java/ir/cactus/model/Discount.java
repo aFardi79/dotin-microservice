@@ -3,16 +3,10 @@ package ir.cactus.model;
 import java.math.BigDecimal;
 
 public class Discount {
-    private Long id;
+
     private BigDecimal percentage;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String code;
+    private String expireDate;
 
     public BigDecimal getPercentage() {
         return percentage;
@@ -20,5 +14,21 @@ public class Discount {
 
     public void setPercentage(BigDecimal percentage) {
         this.percentage = percentage;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(String expireDate) {
+        this.expireDate = expireDate;
     }
 }
