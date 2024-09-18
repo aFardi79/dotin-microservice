@@ -2,12 +2,16 @@ package ir.cactus.controller;
 
 
 import ir.cactus.model.Product;
-import ir.cactus.service.ProductService;
+import ir.cactus.service.dto.ProductDTO;
+import ir.cactus.service.impl.ProductService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/product")
@@ -19,9 +23,14 @@ public class ProductController {
 
 
     @PostMapping("/createProduct")
-    public void createProduct(@RequestBody Product product) {
-
+    public void createProduct(@RequestBody ProductDTO product) {
         productService.createProduct(product);
+    }
+
+
+    @GetMapping("/findAllProducts")
+    public ResponseEntity<List<ProductDTO>> findAllProducts() {
+        return new ResponseEntity<>(productService.findAllProducts(),new HttpHeaders(), HttpStatus.OK);
     }
 
 }
