@@ -1,8 +1,11 @@
 package ir.cactus.service.impl;
 
 
-import ir.cactus.model.DiscountDTO;
+import ir.cactus.discount.DiscountClient;
+import ir.cactus.discount.DiscountDTO;
 import ir.cactus.model.Product;
+import ir.cactus.notification.NotificationClient;
+import ir.cactus.notification.NotificationDTO;
 import ir.cactus.repository.ProductRepository;
 import ir.cactus.service.dto.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,16 +29,32 @@ public class ProductService {
     @Autowired
     RestClient restClient;
 
+    @Autowired
+    private DiscountClient discountClient;
+
+    @Autowired
+    private NotificationClient notificationClient;
+
 
     public void createProduct(ProductDTO product) {
-//        Discount discount =restClient.get()
+//        DiscountDTO discount = restClient.get()
 //                .uri("http://localhost:9090/api/v1/discount/findDiscountByCode/{code}")
-//                        .retrieve()
-//                                .toEntity(Discount.class);
-        DiscountDTO discount=restTemplate.getForObject("http://localhost:9090/api/v1/discount/findDiscountByCode/{code}", DiscountDTO.class,product.getCouponCode());
-        product.setPrice(product.getPrice().divide(discount.getPercentage()));
+//                .retrieve()
+//                .body(DiscountDTO.class);
+//        DiscountDTO discount=restTemplate.getForObject("http://DISCOUNT/api/v1/discount/findDiscountByCode/{code}", DiscountDTO.class,product.getCouponCode());
+        DiscountDTO discountDTO=discountClient.findDiscountByCode(product.getCouponCode());
+        product.setPrice(product.getPrice().divide(discountDTO.getPercentage()));
         Product productEntity=generateProduct(product);
-        productRepository.save(productEntity);
+        Product productResult =productRepository.save(productEntity);
+        if (productResult!=null){
+            NotificationDTO notificationDTO=new NotificationDTO();
+            notificationDTO.setEntityID(productResult.getId());
+            notificationDTO.setMessage("the product is created");
+            notificationDTO.setTime(LocalDateTime.now().toString());
+            notificationDTO.setSender("amir");
+            notificationDTO.setEntityName(productResult.getClass().getSimpleName());
+            notificationClient.createNotification(notificationDTO);
+        }
     }
 
     public List<ProductDTO>findAllProducts() {

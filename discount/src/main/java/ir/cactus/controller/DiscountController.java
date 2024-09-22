@@ -43,8 +43,8 @@ public class DiscountController {
     }
 
     @GetMapping("/findDiscountByCode/{code}")
-    public ResponseEntity<DiscountDTO>findDiscountByCode(@PathVariable("code") String code) {
-        return new ResponseEntity<>(discountService.findDiscountByCode(code),new HttpHeaders(), HttpStatus.OK);
+    public DiscountDTO findDiscountByCode(@PathVariable("code") String code) {
+        return discountService.findDiscountByCode(code);
     }
 
     @DeleteMapping("/deleteDiscountByCode/{code}")
