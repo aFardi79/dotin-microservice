@@ -1,4 +1,4 @@
-package ir.cactus.model;
+package ir.cactus.discount;
 
 import java.math.BigDecimal;
 
