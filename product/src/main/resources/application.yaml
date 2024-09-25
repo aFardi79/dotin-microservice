@@ -15,12 +15,21 @@ spring:
       ddl-auto: update
   application:
     name: product
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        register: true
+        prefer-ip-address: true
+        service-name: ${spring.application.name}
 
-eureka:
-  client:
-    server-url:
-       defaultZone: http://localhost:8761/eureka
-  instance:
-    lease-expiration-duration-in-seconds: 20
-    lease-renewal-interval-in-seconds: 5
-    prefer-ip-address: true
+#eureka:
+#  client:
+#    server-url:
+#       defaultZone: http://localhost:8761/eureka
+#  instance:
+#    lease-expiration-duration-in-seconds: 20
+#    lease-renewal-interval-in-seconds: 5
+#    prefer-ip-address: true
+
