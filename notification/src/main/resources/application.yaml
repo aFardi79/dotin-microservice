@@ -6,24 +6,16 @@ spring:
     password: FT_amir13456679
     url: jdbc:mysql://localhost:3306/dotinMikro
     driver-class-name: com.mysql.cj.jdbc.Driver
-  cloud:
-      consul:
-        host: localhost
-        port: 8500
-        discovery:
-          register: true
-          prefer-ip-address: true
-          service-name: ${spring.application.name}
   jpa:
     hibernate:
       ddl-auto: update
   application:
     name: notification
-#eureka:
-#  client:
-#    server-url:
-#      defaultZone: http://localhost:8761/eureka
-#  instance:
-#    lease-expiration-duration-in-seconds: 20
-#    lease-renewal-interval-in-seconds: 5
-#    prefer-ip-address: true
+eureka:
+  client:
+    server-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    lease-expiration-duration-in-seconds: 20
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: true
