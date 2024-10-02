@@ -1,0 +1,28 @@
+server:
+  port: 6060
+
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+  application:
+    name: gateway
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+eureka:
+  client:
+    server-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    lease-expiration-duration-in-seconds: 20
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: true

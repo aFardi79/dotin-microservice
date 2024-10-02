@@ -12,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableFeignClients(basePackages ={"ir.cactus.discount","ir.cactus.notification"})
-@EnableDiscoveryClient
 public class ProductApplication {
 
     public static void main(String[] args) {
