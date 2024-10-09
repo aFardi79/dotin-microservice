@@ -77,6 +77,11 @@ public class ProductService {
     }
 
 
+    public Product getProduct(Long id){
+        return productRepository.findById(id).get();
+    }
+
+
     public ProductDTO generateProductDTO(Product product) {
         ProductDTO productDTO=new ProductDTO();
         productDTO.setId(product.getId());

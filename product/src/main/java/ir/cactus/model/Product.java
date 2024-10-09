@@ -52,4 +52,12 @@ public class Product {
     public void setCouponCode(String couponCode) {
         CouponCode = couponCode;
     }
+
+
+    public Product( String name, BigDecimal price, String couponCode) {
+        this.name = name;
+        this.price = price;
+        CouponCode = couponCode;
+    }
+    public Product(){}
 }
