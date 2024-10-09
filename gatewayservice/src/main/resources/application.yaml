@@ -26,3 +26,10 @@ eureka:
     lease-expiration-duration-in-seconds: 20
     lease-renewal-interval-in-seconds: 5
     prefer-ip-address: true
+resilience4j.circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10000
+        permitted-number-of-calls-in-half-open-state: 3

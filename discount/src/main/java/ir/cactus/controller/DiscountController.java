@@ -3,6 +3,7 @@ package ir.cactus.controller;
 
 import ir.cactus.service.IDiscountService;
 import ir.cactus.service.dto.DiscountDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/discount")
+@Slf4j
 public class DiscountController {
 
     @Autowired
@@ -44,7 +46,9 @@ public class DiscountController {
 
     @GetMapping("/findDiscountByCode/{code}")
     public DiscountDTO findDiscountByCode(@PathVariable("code") String code) {
-        return discountService.findDiscountByCode(code);
+        log.info("invoke getDiscount{}",code);
+        throw new RuntimeException("errrorrr");
+//        return discountService.findDiscountByCode(code);
     }
 
     @DeleteMapping("/deleteDiscountByCode/{code}")
