@@ -2,25 +2,27 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/dotinMikro
+    url: jdbc:postgresql://postgres-container:5432/dotinmikro
     username: postgres
-    password: salam
+    password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
   application:
     name: discount
 server:
   port: 9090
 
 
-eureka:
-  client:
-    server-url:
-      defaultZone: http://localhost:8761/eureka
-  instance:
-    lease-expiration-duration-in-seconds: 20
-    lease-renewal-interval-in-seconds: 5
-    prefer-ip-address: true
-    hostname:
+#eureka:
+#  client:
+#    server-url:
+#      defaultZone: http://localhost:8761/eureka
+#  instance:
+#    lease-expiration-duration-in-seconds: 20
+#    lease-renewal-interval-in-seconds: 5
+#    prefer-ip-address: true
+#    hostname:
