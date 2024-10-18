@@ -21,7 +21,7 @@ management:
 eureka:
   client:
     server-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka-server:8761/eureka
   instance:
     lease-expiration-duration-in-seconds: 20
     lease-renewal-interval-in-seconds: 5
