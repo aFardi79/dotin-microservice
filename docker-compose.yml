@@ -1,0 +1,118 @@
+version : "3.8"
+
+services:
+  eureka_server:
+    image: eureka
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - spring-net
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  notification-app:
+    image: my-notification
+    container_name: notification-app
+    ports:
+      - "7070:7070"
+    depends_on:
+      - mysql-db
+      - eureka_server
+    networks:
+      - spring-net
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka_server:8761/eureka
+
+  #  mongo-db:
+#    image: mongodb/mongodb-community-server
+#    container_name: mongo-db-container
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: 1234
+#      MONGO_INITDB_DATABASE : product
+#    ports:
+#      - "27017:27017"
+#    networks:
+#      - spring-net
+
+
+  mysql-db:
+    image: mysql:latest
+    container_name: mysql-db
+    environment:
+      MYSQL_DATABASE: dotinMikro
+      MYSQL_ROOT_PASSWORD: FT_amir13456679
+      MYSQL_PASSWORD : FT_amir13456679
+    ports:
+      - "3306:3306"
+    networks:
+      - spring-net
+
+
+
+#  postgres-db:
+#    image: postgres:latest
+#    container_name: postgres-container
+#    environment:
+#      POSTGRES_DB: dotinmikro
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - postgres-data:/var/lib/postgresql/data
+#    networks:
+#      - spring-net
+
+#  product-app:
+#    image: my-product
+#    container_name: my-product-app
+#    depends_on:
+#      - mongo-db
+#      - eureka-server
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - spring-net
+
+
+
+#  discount-app:
+#      image: my-discount
+#      container_name: my-discount-app
+#      depends_on:
+#        - postgres-db
+#        - eureka-server
+#      ports:
+#        - "9090:9090"
+#      environment:
+#        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-container:5432/dotinmikro
+#        SPRING_DATASOURCE_USERNAME: postgres
+#        SPRING_DATASOURCE_PASSWORD: postgres
+#      networks:
+#        - spring-net
+#  gateway-app:
+#    image: my-gate-way
+#    container_name: my-gateWay-app
+#    depends_on:
+#      - eureka-server
+#    ports:
+#      - "6060:6060"
+#    networks:
+#      - spring-net
+#  notification-app:
+#    image : my-notification
+#    container_name: notification-container
+#    ports:
+#      - "7070:7070"
+#    depends_on:
+#      - mysql-db
+#      - eureka-server
+#    networks:
+#      - spring-net
+#volumes:
+#  postgres-data:
+
+networks:
+  spring-net:

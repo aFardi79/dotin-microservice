@@ -9,20 +9,12 @@ spring:
      database: product
      username: root
      password: 1234
-     uri:  mongodb://root:1234@localhost:27017/product
+     uri:  mongodb://root:1234@mongo-db-container:27017/product
   jpa:
     hibernate:
       ddl-auto: update
   application:
     name: product
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        register: true
-        prefer-ip-address: true
-        service-name: ${spring.application.name}
 
 eureka:
   client:

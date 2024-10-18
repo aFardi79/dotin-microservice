@@ -10,3 +10,5 @@ eureka:
   server:
     response-cache-update-interval-ms: 5000
     wait-time-in-ms-when-sync-empty: 0
+  instance:
+    hostname: eureka_server
