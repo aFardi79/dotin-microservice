@@ -47,8 +47,7 @@ public class DiscountController {
     @GetMapping("/findDiscountByCode/{code}")
     public DiscountDTO findDiscountByCode(@PathVariable("code") String code) {
         log.info("invoke getDiscount{}",code);
-        throw new RuntimeException("errrorrr");
-//        return discountService.findDiscountByCode(code);
+        return discountService.findDiscountByCode(code);
     }
 
     @DeleteMapping("/deleteDiscountByCode/{code}")

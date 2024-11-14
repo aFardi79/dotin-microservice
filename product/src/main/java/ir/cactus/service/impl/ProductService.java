@@ -24,11 +24,11 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    RestTemplate restTemplate;
-
-    @Autowired
-    RestClient restClient;
+//    @Autowired
+//    RestTemplate restTemplate;
+//
+//    @Autowired
+//    RestClient restClient;
 
     @Autowired
     private DiscountClient discountClient;

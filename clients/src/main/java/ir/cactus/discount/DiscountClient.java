@@ -5,11 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient("DISCOUNT")
+@FeignClient(name = "DISCOUNT")
 public interface DiscountClient {
 
 
-    @GetMapping("api/v1/discount/findDiscountByCode/{code}")
+    @GetMapping("/api/v1/discount/findDiscountByCode/{code}")
     DiscountDTO findDiscountByCode(@PathVariable("code") String code);
 
 }
