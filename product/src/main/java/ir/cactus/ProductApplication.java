@@ -18,16 +18,7 @@ public class ProductApplication {
         SpringApplication.run(ProductApplication.class, args);
     }
 
-    @Bean
-    @LoadBalanced
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
+//
 
-    @Bean
-    @LoadBalanced
-    public RestClient restClient(){
-        return RestClient.builder().build();
-    }
 }
 

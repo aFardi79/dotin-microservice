@@ -1,18 +1,22 @@
-server:
-  port: 7070
+
+
 spring:
   datasource:
-    username: root
-    password: FT_amir13456679
-    url: jdbc:mysql://mysql-db:3306/dotinMikro
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://postgres-db:5432/dotinmikro
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
   application:
-    name: NOTIFICATION
+    name: DISCOUNT
+server:
+  port: 9090
+
+
 eureka:
   client:
     service-url:

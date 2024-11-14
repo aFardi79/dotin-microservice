@@ -2,8 +2,8 @@ version : "3.8"
 
 services:
   eureka_server:
-    image: eureka
-    container_name: eureka-server
+    build: ./eurikaServer/.
+    container_name: eurekaServer
     ports:
       - "8761:8761"
     networks:
@@ -11,8 +11,8 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
   notification-app:
-    image: my-notification
-    container_name: notification-app
+    build: ./notification/.
+    container_name: notificationApp
     ports:
       - "7070:7070"
     depends_on:
@@ -22,19 +22,17 @@ services:
       - spring-net
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka_server:8761/eureka
-
-  #  mongo-db:
-#    image: mongodb/mongodb-community-server
-#    container_name: mongo-db-container
-#    environment:
-#      MONGO_INITDB_ROOT_USERNAME: root
-#      MONGO_INITDB_ROOT_PASSWORD: 1234
-#      MONGO_INITDB_DATABASE : product
-#    ports:
-#      - "27017:27017"
-#    networks:
-#      - spring-net
+  mongo-db:
+    image: mongo:latest
+    container_name: mongo-db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+      MONGO_INITDB_DATABASE : product
+    ports:
+      - "27017:27017"
+    networks:
+      - spring-net
 
 
   mysql-db:
@@ -51,68 +49,66 @@ services:
 
 
 
-#  postgres-db:
-#    image: postgres:latest
-#    container_name: postgres-container
-#    environment:
-#      POSTGRES_DB: dotinmikro
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: postgres
-#    ports:
-#      - "5432:5432"
-#    volumes:
-#      - postgres-data:/var/lib/postgresql/data
-#    networks:
-#      - spring-net
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: dotinmikro
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - spring-net
 
-#  product-app:
-#    image: my-product
-#    container_name: my-product-app
-#    depends_on:
-#      - mongo-db
-#      - eureka-server
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      - spring-net
+  product-app:
+    build: ./product/.
+    container_name: my-product-app
+    depends_on:
+      - mongo-db
+      - eureka_server
+    ports:
+      - "8080:8080"
+    environment:
+     - MONGO_HOST= mongo-db
+     - MONGO_PORT= 27017
+     - MONGO_USER= root
+     - MONGO_PASSWORD= 1234
+     - MONGO_DB= product
+     - SPRING_PROFILES_ACTIVE = docker
+    networks:
+      - spring-net
 
 
 
-#  discount-app:
-#      image: my-discount
-#      container_name: my-discount-app
-#      depends_on:
-#        - postgres-db
-#        - eureka-server
-#      ports:
-#        - "9090:9090"
-#      environment:
-#        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-container:5432/dotinmikro
-#        SPRING_DATASOURCE_USERNAME: postgres
-#        SPRING_DATASOURCE_PASSWORD: postgres
-#      networks:
-#        - spring-net
-#  gateway-app:
-#    image: my-gate-way
-#    container_name: my-gateWay-app
-#    depends_on:
-#      - eureka-server
-#    ports:
-#      - "6060:6060"
-#    networks:
-#      - spring-net
-#  notification-app:
-#    image : my-notification
-#    container_name: notification-container
-#    ports:
-#      - "7070:7070"
-#    depends_on:
-#      - mysql-db
-#      - eureka-server
-#    networks:
-#      - spring-net
-#volumes:
-#  postgres-data:
+  discount-app:
+      build: ./discount/.
+      container_name: my-discount-app
+      depends_on:
+        - postgres-db
+        - eureka_server
+      ports:
+        - "9090:9090"
+      environment:
+          SPRING_DATASOURCE_URL : jdbc:postgresql://postgres-db:5432/dotinmikro
+          SPRING_DATASOURCE_USERNAME : postgres
+          SPRING_DATASOURCE_PASSWORD: postgres
+          SPRING_PROFILES_ACTIVE : docker
+      networks:
+        - spring-net
+  gateway-app:
+    image: my-gate-way
+    container_name: my-gateWay-app
+    depends_on:
+      - eureka_server
+    ports:
+      - "6060:6060"
+    networks:
+      - spring-net
+
 
 networks:
+  default:
   spring-net:
+    name: "spring-net"
+    driver: bridge
