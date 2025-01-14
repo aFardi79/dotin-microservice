@@ -2,14 +2,19 @@ server:
   port: 8080
 
 spring:
-  data:
-   mongodb:
-     port: 27017
-     host: localhost
-     database: product
-     username: root
-     password: 1234
-     uri:  mongodb://root:1234@mongo-db-container:27017/product
+  datasource:
+    url: jdbc:postgresql://postgres-container:5432/dotinmikro
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+#  data:
+#   mongodb:
+#     port: 27017
+#     host: localhost
+#     database: product
+#     username: root
+#     password: salam
+#     uri:  mongodb://root:salam@localhost:27017/product
   jpa:
     hibernate:
       ddl-auto: update

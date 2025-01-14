@@ -27,7 +27,7 @@ services:
     container_name: mongo-db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 1234
+      MONGO_INITDB_ROOT_PASSWORD: salam
       MONGO_INITDB_DATABASE : product
     ports:
       - "27017:27017"
@@ -70,12 +70,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-     - MONGO_HOST= mongo-db
-     - MONGO_PORT= 27017
-     - MONGO_USER= root
-     - MONGO_PASSWORD= 1234
-     - MONGO_DB= product
-     - SPRING_PROFILES_ACTIVE = docker
+      MONGO_HOST: mongo-db
+      MONGO_PORT : 27017
+      MONGO_USER : root
+      MONGO_PASSWORD: salam
+      MONGO_DB: product
+      SPRING_PROFILES_ACTIVE : docker
     networks:
       - spring-net
 
@@ -97,7 +97,7 @@ services:
       networks:
         - spring-net
   gateway-app:
-    image: my-gate-way
+    build: ./gatewayservice/.
     container_name: my-gateWay-app
     depends_on:
       - eureka_server
