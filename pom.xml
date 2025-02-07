@@ -16,6 +16,7 @@
     <module>clients</module>
     <module>notification</module>
     <module>gatewayservice</module>
+    <module>shared</module>
   </modules>
 
   <properties>
@@ -24,6 +25,7 @@
     <spring.cloud.version>2023.0.3</spring.cloud.version>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+    <axon.version>4.10.0</axon.version>
   </properties>
 
   <dependencies>
@@ -34,7 +36,6 @@
       <version>1.18.34</version>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -54,6 +55,13 @@
         <version>${spring.boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.axonframework</groupId>
+        <artifactId>axon-bom</artifactId>
+        <version>${axon.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
       </dependency>
       <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
       <dependency>

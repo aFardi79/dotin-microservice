@@ -12,18 +12,12 @@ public class Discount {
     private BigDecimal percentage;
     private String code;
     private String expireDate;
-
-
-
+    private Long count;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
-    }
+    public Long getId() {return this.id;}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id) {this.id = id;}
 
     @Column(name = "c_percentage")
     public BigDecimal getPercentage() {
@@ -47,4 +41,13 @@ public class Discount {
     public String getExpireDate() {return expireDate;}
 
     public void setExpireDate(String expireDate) {this.expireDate = expireDate;}
+
+    @Column(name = "c_count")
+    public Long getCount() {
+        return this.count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
+    }
 }

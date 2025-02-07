@@ -2,25 +2,23 @@ server:
   port: 8080
 
 spring:
-  datasource:
-    url: jdbc:postgresql://postgres-container:5432/dotinmikro
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
-#  data:
-#   mongodb:
-#     port: 27017
-#     host: localhost
-#     database: product
-#     username: root
-#     password: salam
-#     uri:  mongodb://root:salam@localhost:27017/product
   jpa:
     hibernate:
       ddl-auto: update
   application:
     name: product
-
+  datasource:
+    username: root
+    password: FT_amir13456679
+    url: jdbc:mysql://localhost:3306/dotinMikro
+    driver-class-name: com.mysql.cj.jdbc.Driver
+axon:
+  axonserver:
+    servers: localhost:8124
+    context: default
+    component-name: product-service
+  serializer:
+    general: jackson
 eureka:
   client:
     server-url:

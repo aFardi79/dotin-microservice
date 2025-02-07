@@ -1,4 +1,3 @@
-version : "3.8"
 
 services:
   eureka_server:
@@ -18,22 +17,21 @@ services:
     depends_on:
       - mysql-db
       - eureka_server
+      - axon-server
     networks:
       - spring-net
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-  mongo-db:
-    image: mongo:latest
-    container_name: mongo-db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: salam
-      MONGO_INITDB_DATABASE : product
+      - AXON_SERVER_HOST= axon-server
+      - AXON_SERVER_PORT= 8124
+  axon-server:
+    image: axoniq/axonserver:latest
+    container_name: axon-server
     ports:
-      - "27017:27017"
+      - "8024:8024" # HTTP Dashboard
+      - "8124:8124" # Command/Event/Query communication
     networks:
       - spring-net
-
 
   mysql-db:
     image: mysql:latest
@@ -65,17 +63,15 @@ services:
     build: ./product/.
     container_name: my-product-app
     depends_on:
-      - mongo-db
-      - eureka_server
+       - mysql-db
+       - axon-server
+       - eureka_server
     ports:
       - "8080:8080"
     environment:
-      MONGO_HOST: mongo-db
-      MONGO_PORT : 27017
-      MONGO_USER : root
-      MONGO_PASSWORD: salam
-      MONGO_DB: product
-      SPRING_PROFILES_ACTIVE : docker
+      - SPRING_PROFILES_ACTIVE=docker
+      - AXON_SERVER_HOST= axon-server
+      - AXON_SERVER_PORT= 8124
     networks:
       - spring-net
 
@@ -87,12 +83,15 @@ services:
       depends_on:
         - postgres-db
         - eureka_server
+        - axon-server
       ports:
         - "9090:9090"
       environment:
           SPRING_DATASOURCE_URL : jdbc:postgresql://postgres-db:5432/dotinmikro
           SPRING_DATASOURCE_USERNAME : postgres
           SPRING_DATASOURCE_PASSWORD: postgres
+          AXON_SERVER_HOST: axon-server
+          AXON_SERVER_PORT: 8124
           SPRING_PROFILES_ACTIVE : docker
       networks:
         - spring-net

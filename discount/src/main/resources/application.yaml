@@ -27,3 +27,10 @@ eureka:
     lease-expiration-duration-in-seconds: 20
     lease-renewal-interval-in-seconds: 5
     hostname: localhost
+axon:
+  axonserver:
+    servers: localhost:8124
+    context: default
+    component-name: discount-service
+  serializer:
+    general: jackson

@@ -2,19 +2,23 @@ server:
   port: 8080
 
 spring:
-  data:
-    mongodb:
-      port: 27017
-      host:
-      database: product
-      username: root
-      password: salam
+  datasource:
+    username: root
+    password: FT_amir13456679
+    url: jdbc:mysql://mysql-db:3306/dotinMikro
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
   application:
     name: product
-
+axon:
+  axonserver:
+    servers: axon-server:8124
+    context: default
+    component-name: product-service
+  serializer:
+    general: jackson
 eureka:
   client:
     service-url:
