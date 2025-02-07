@@ -7,6 +7,7 @@ public class DiscountDTO {
     private BigDecimal percentage;
     private String code;
     private String expireDate;
+    private Long count;
 
     public BigDecimal getPercentage() {return percentage;}
 
@@ -19,4 +20,7 @@ public class DiscountDTO {
     public String getExpireDate() {return expireDate;}
 
     public void setExpireDate(String expireDate) {this.expireDate = expireDate;}
+
+    public Long getCount() {return count;}
+    public void setCount(Long count) {this.count = count;}
 }

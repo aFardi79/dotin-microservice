@@ -49,7 +49,7 @@ public class ProductService {
         Product productResult =productRepository.save(productEntity);
         if (productResult!=null){
             NotificationDTO notificationDTO=new NotificationDTO();
-            notificationDTO.setEntityID(productResult.getId());
+            notificationDTO.setEntityID(String.valueOf(productResult.getId()));
             notificationDTO.setMessage("the product is created");
             notificationDTO.setTime(LocalDateTime.now().toString());
             notificationDTO.setSender("amir");
@@ -70,7 +70,7 @@ public class ProductService {
 
     public Product generateProduct(ProductDTO product) {
         Product productEntity=new  Product();
-        productEntity.setId(product.getId());
+        productEntity.setId(Long.parseLong(product.getId()));
         productEntity.setName(product.getName());
         productEntity.setPrice(product.getPrice());
         return productEntity;
@@ -84,7 +84,7 @@ public class ProductService {
 
     public ProductDTO generateProductDTO(Product product) {
         ProductDTO productDTO=new ProductDTO();
-        productDTO.setId(product.getId());
+        productDTO.setId(String.valueOf(product.getId()));
         productDTO.setName(product.getName());
         productDTO.setPrice(product.getPrice());
         return productDTO;

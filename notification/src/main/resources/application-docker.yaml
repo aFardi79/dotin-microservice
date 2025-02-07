@@ -6,6 +6,7 @@ spring:
     password: FT_amir13456679
     url: jdbc:mysql://mysql-db:3306/dotinMikro
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -21,3 +22,10 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 20
     prefer-ip-address: true
+axon:
+  axonserver:
+    servers: axon-server:8124
+    context: default
+    component-name: notification-service
+  serializer:
+    general: jackson

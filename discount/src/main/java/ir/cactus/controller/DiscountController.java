@@ -1,9 +1,12 @@
 package ir.cactus.controller;
 
 
+import ir.cactus.model.Discount;
 import ir.cactus.service.IDiscountService;
 import ir.cactus.service.dto.DiscountDTO;
+import ir.cactus.shared.discount.command.CreateDiscountCommand;
 import lombok.extern.slf4j.Slf4j;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,14 +14,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.random.RandomGenerator;
 
 @RestController
 @RequestMapping("/api/v1/discount")
 @Slf4j
 public class DiscountController {
 
-    @Autowired
-    private IDiscountService discountService;
+  private final IDiscountService discountService;
+  private final CommandGateway commandGateway;
+
+
+
+  public DiscountController(IDiscountService discountService, CommandGateway commandGateway) {
+      this.discountService = discountService;
+      this.commandGateway = commandGateway;
+  }
 
 
 
@@ -35,8 +47,10 @@ public class DiscountController {
     }*/
 
     @PostMapping("/createDiscount")
-    public void createDiscount(@RequestBody DiscountDTO discountDTO) {
-        discountService.create(discountDTO);
+    public String createDiscount(@RequestBody DiscountDTO discountDTO) {
+        String disocuntCode=discountDTO.getCode()!=null?discountDTO.getCode(): UUID.randomUUID().toString();
+        commandGateway.send(new CreateDiscountCommand(RandomGenerator.getDefault().nextLong(), disocuntCode,discountDTO.getPercentage(),discountDTO.getExpireDate(),discountDTO.getCount()));
+        return "discount created";
     }
 
     @PostMapping("/updateDiscount")
@@ -54,4 +68,6 @@ public class DiscountController {
     public void deleteDiscount(@PathVariable("code") String code){
         discountService.delete(code);
     }
+
+    record CreateDiscountRequest(String discountCode, int initialCount, double percentage) {}
 }

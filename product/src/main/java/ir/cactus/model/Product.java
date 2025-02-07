@@ -1,32 +1,34 @@
 package ir.cactus.model;
 
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
+import lombok.Data;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.math.BigDecimal;
 
-@Document(collection = "t_product")
+@Data
+@Entity
+@Table(name="t_product")
 public class Product {
 
-    private String id;
-
+    private Long id;
     private String name;
     private BigDecimal price;
     private String CouponCode;
 
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
 
+    @Column(name="c_name")
     public String getName() {
         return name;
     }
@@ -36,6 +38,7 @@ public class Product {
     }
 
 
+    @Column(name="c_price")
     public BigDecimal getPrice() {
         return price;
     }
